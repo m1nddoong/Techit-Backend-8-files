@@ -2,6 +2,7 @@ package com.example.contents.service;
 
 import com.example.contents.dto.UserDto;
 import com.example.contents.entity.User;
+import com.example.contents.exceptions.UsernameExistException;
 import com.example.contents.repository.UserRepository;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +23,13 @@ public class UserService {
 
     // CREATE USER : 회원 가입
     public UserDto create(UserDto dto) {
+        // 사용자 생성 전 계정 이름 겹침 확인 후
+        // 확인 헀을 때 겹칠 경우 400
+        if (repository.existsByUsername(dto.getUsername()))
+            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            // throw new IllegalArgumentException("duplicate username");
+            throw new UsernameExistException();
+
         User newUser = new User(
                 dto.getUsername(),
                 dto.getEmail(),
