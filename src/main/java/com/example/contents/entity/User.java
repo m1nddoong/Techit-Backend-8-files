@@ -17,7 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true) // 사용자 이름이 겹치지 않게 해줌
     private String username;
     private String email;
     @Setter
@@ -33,6 +33,4 @@ public class User {
         this.phone = phone;
         this.bio = bio;
     }
-
-
 }
